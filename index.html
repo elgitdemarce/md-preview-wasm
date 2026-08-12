@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Markdown Preview · WASM</title>
+  </head>
+  <body>
+    <div id="app">
+      <header class="toolbar">
+        <span class="brand">Markdown <span class="accent">Preview</span></span>
+        <span class="engine">md4c &middot; WebAssembly</span>
+      </header>
+
+      <main>
+        <section id="dropzone" class="dropzone">
+          <div class="dropzone-inner">
+            <svg viewBox="0 0 24 24" width="48" height="48" aria-hidden="true">
+              <path
+                d="M12 16V4m0 0L7 9m5-5 5 5M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"
+                fill="none" stroke="currentColor" stroke-width="1.6"
+                stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <h1>Arrastrá un archivo <code>.md</code></h1>
+            <p>o</p>
+            <button id="pick" type="button">Elegir archivo</button>
+            <p class="hint" id="status">Cargando motor WebAssembly&hellip;</p>
+          </div>
+        </section>
+
+        <section id="preview" class="preview hidden">
+          <div class="preview-bar">
+            <span class="file" id="filename"></span>
+            <span class="stats" id="stats"></span>
+            <button id="close" type="button" title="Volver">&times;</button>
+          </div>
+          <article id="content" class="markdown-body"></article>
+        </section>
+      </main>
+    </div>
+
+    <input id="file" type="file" accept=".md,.markdown,.mdown,text/markdown,text/plain" hidden />
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
