@@ -82,10 +82,11 @@ main {
 
 .dropzone-inner {
   text-align: center;
-  padding: 48px 40px;
+  padding: 64px 48px;
   border: 2px dashed var(--border);
   border-radius: 12px;
-  max-width: 460px;
+  max-width: 760px;
+  min-height: 320px;
   width: 100%;
   transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
 }
@@ -98,6 +99,8 @@ main {
 
 .dropzone svg {
   color: var(--fg-muted);
+  width: 64px;
+  height: 64px;
 }
 
 .dropzone.dragging svg {
