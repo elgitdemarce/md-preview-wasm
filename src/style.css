@@ -82,12 +82,15 @@ main {
 
 .dropzone-inner {
   text-align: center;
-  padding: 64px 48px;
+  text-align: center;
+  /* ocupar casi todo el espacio del body: ancho completo con margen y altura calculada */
+  padding: 80px 48px;
   border: 2px dashed var(--border);
   border-radius: 12px;
-  max-width: 760px;
-  min-height: 320px;
-  width: 100%;
+  max-width: none;
+  width: calc(100% - 48px);
+  height: calc(100% - 96px);
+  min-height: 420px;
   transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
 }
 
@@ -99,8 +102,8 @@ main {
 
 .dropzone svg {
   color: var(--fg-muted);
-  width: 64px;
-  height: 64px;
+  width: 96px;
+  height: 96px;
 }
 
 .dropzone.dragging svg {
