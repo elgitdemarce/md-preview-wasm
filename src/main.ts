@@ -12,6 +12,7 @@ const statusEl = document.querySelector<HTMLElement>('#status')!
 const pickBtn = document.querySelector<HTMLButtonElement>('#pick')!
 const closeBtn = document.querySelector<HTMLButtonElement>('#close')!
 const fileInput = document.querySelector<HTMLInputElement>('#file')!
+const textEncoder = new TextEncoder()
 
 function render(bytes: Uint8Array, name: string): void {
   const t0 = performance.now()
@@ -32,6 +33,12 @@ function showDropzone(): void {
   dropzone.classList.remove('hidden')
   content.innerHTML = ''
   fileInput.value = ''
+  dropzone.focus()
+}
+
+function renderText(markdownText: string, name: string): void {
+  const bytes = textEncoder.encode(markdownText)
+  render(bytes, name)
 }
 
 async function handleFile(file: File): Promise<void> {
@@ -41,6 +48,14 @@ async function handleFile(file: File): Promise<void> {
   }
   const bytes = new Uint8Array(await file.arrayBuffer())
   render(bytes, file.name)
+}
+
+function handlePastedMarkdown(markdownText: string): void {
+  if (!markdownText.trim()) {
+    statusEl.textContent = 'El portapapeles no tiene texto Markdown para previsualizar.'
+    return
+  }
+  renderText(markdownText, 'clipboard.md')
 }
 
 pickBtn.addEventListener('click', () => fileInput.click())
@@ -70,6 +85,16 @@ dropzone.addEventListener('drop', (e) => {
   if (file) void handleFile(file)
 })
 
+dropzone.addEventListener('paste', (e) => {
+  const markdownText = e.clipboardData?.getData('text/plain') ?? ''
+  if (!markdownText) {
+    statusEl.textContent = 'No se detecto texto en el portapapeles.'
+    return
+  }
+  e.preventDefault()
+  handlePastedMarkdown(markdownText)
+})
+
 // Prevent the browser from navigating when a file is dropped outside the zone.
 window.addEventListener('dragover', (e) => e.preventDefault())
 window.addEventListener('drop', (e) => e.preventDefault())
@@ -77,8 +102,9 @@ window.addEventListener('drop', (e) => e.preventDefault())
 async function init(): Promise<void> {
   try {
     await markdownReady
-    statusEl.textContent = 'Motor listo · arrastrá un archivo para empezar'
+    statusEl.textContent = 'Motor listo · arrastrá un archivo o pegá Markdown para empezar'
     statusEl.classList.add('ok')
+    dropzone.focus()
   } catch (err) {
     console.error(err)
     statusEl.textContent = 'No se pudo cargar WebAssembly en este navegador.'

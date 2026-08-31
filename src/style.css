@@ -78,6 +78,7 @@ main {
   justify-content: center;
   padding: 24px;
   transition: background 0.15s ease;
+  outline: none;
 }
 
 .dropzone-inner {
@@ -98,6 +99,11 @@ main {
   border-color: var(--accent);
   background: rgba(78, 201, 176, 0.06);
   transform: scale(1.02);
+}
+
+.dropzone:focus-visible .dropzone-inner {
+  border-color: var(--accent-2);
+  box-shadow: 0 0 0 3px rgba(86, 156, 214, 0.25);
 }
 
 .dropzone svg {
